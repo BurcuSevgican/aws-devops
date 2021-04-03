@@ -1,0 +1,8 @@
+bash-script: |
+  echo "Hello World"
+  export PROFILE="teacher"
+  echo $PROFILE
+para: |
+  sentence will be  in  single  line  
+key: value
+key2: value2null
