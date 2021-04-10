@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  This template will create Application Load Balancer with ASG using LT
+Parameters:
+  CallVpc:
+    Description: VPC ID of your existing account
+    Type: AWS::EC2::VPC::Id
+  CallSubnets:
+    Description: List of Subnet Ids in your VPC. Please select at least 2 of them.
+    Type: List<AWS::EC2::Subnet::Id>
+  
+   
+  
+  
+Resources:
+   CallSecGroup:
+     Type: AWS::EC2::SecurityGroup
+     Properties:
+        GroupDescription: Enables SSH and HTTP ports #required
+        GroupName: Call ALB Demo
+        
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 22
+            ToPort: 22
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: 80
+            ToPort: 80
+            CidrIp: 0.0.0.0/0
+        VpcId: !Ref CallVpc
+
+   CallALBTargetGroup:
+     Type: AWS::ElasticLoadBalancingV2::TargetGroup
+     Properties:
+       
+       HealthCheckIntervalSeconds: 25
+      
+       HealthCheckTimeoutSeconds: 5
+       HealthyThresholdCount: 3
+       
+       Port: 80
+       Protocol: HTTP
+       
+       UnhealthyThresholdCount: 3
+       VpcId: !Ref CallVpc
+        
+   CallApplicationLoadBalancer:
+      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+      Properties:
+      
+        SecurityGroups:
+          - !GetAtt CallSecGroup.GroupId
+     
+        Subnets: !Ref Callsubnets
+
+   CallALBlistener:
+     Type: AWS::ElasticLoadBalancingV2::Listener
+     Properties:
+      
+       DefaultActions: #required
+         - Type: forward
+           TargetGroupARN: !Ref  CallALBTargetGroup
+           
+       LoadBalancerArn: !Ref CallApplicationLoadBalancer #required
+       Port: 80
+       Protocol: HTTP
+       
+           
+      
