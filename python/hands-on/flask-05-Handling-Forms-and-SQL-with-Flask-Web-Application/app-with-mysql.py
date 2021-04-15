@@ -7,11 +7,11 @@ app = Flask(__name__)
 
 # Configure mysql database
 app.config['MYSQL_DATABASE_HOST'] = 'PLEASE WRITE HERE YOUR RDS ENDPOINT'
-app.config['MYSQL_DATABASE_USER'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'admin'      # RDS i baslatirken user ve pw ayni olmali
 app.config['MYSQL_DATABASE_PASSWORD'] = 'Clarusway_1'
 app.config['MYSQL_DATABASE_DB'] = 'clarusway'
-app.config['MYSQL_DATABASE_PORT'] = 3306
-mysql = MySQL()
+app.config['MYSQL_DATABASE_PORT'] =  
+mysql = MySQL()  # object creation
 mysql.init_app(app)
 connection = mysql.connect()
 connection.autocommit(True)

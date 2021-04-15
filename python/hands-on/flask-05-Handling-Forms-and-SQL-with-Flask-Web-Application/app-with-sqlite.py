@@ -6,9 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 # Configure sqlite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./email.db' 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app) 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./email.db' # 'SQLALCHEMY_DATABASE_URI' da olusturulan ne varsa sqlite:///./email.db ya ekle
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # db deki modifikasyonlari takip edip uyari veriyor
+db = SQLAlchemy(app)  # bu app icinde olan herseyi db olarak tanimla 
 
 # Execute the code below only once.
 # Write sql code for initializing users table..
@@ -25,7 +25,7 @@ VALUES
     ("Emrah", "emrah@google.com"),
     ("Mehmet", "mehmet@tesla.com");
 """
-
+# sqlite de cevrime sokma,commit etme  
 db.session.execute(drop_table)
 db.session.execute(users_table)
 db.session.execute(data)
@@ -34,9 +34,9 @@ db.session.commit()
 
 # Write a function named `find_emails` which find emails using keyword from the user table in the db,
 #  and returns result as tuples `(name, email)`.
-def find_email(keyword):
+def find_email(keyword):      # icerisinde keyword kelimesi bulunan username i getiriyor
     query = f"""
-    SELECT * FROM users WHERE username like '%{keyword}%';
+    SELECT * FROM users WHERE username like '%{keyword}%';  
     """
     result = db.session.execute(query)
     user_emails = [(row[0], row[1]) for row in result]

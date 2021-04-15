@@ -1,0 +1,19 @@
+#! /bin/bash
+
+yum update -y
+
+yum install python3 -y
+
+pip3 install flask
+
+wget https://raw.githubusercontent.com/sipahisnm/aws-repo/master/aws-work-area/project.2/roman-project/app.py
+
+mkdir templates
+
+cd templates
+
+wget https://raw.githubusercontent.com/sipahisnm/aws-repo/master/aws-work-area/project.2/roman-project/templates/index.html
+
+wget https://raw.githubusercontent.com/sipahisnm/aws-repo/master/aws-work-area/project.2/roman-project/templates/number.html
+cd ..
+python3 app.py
