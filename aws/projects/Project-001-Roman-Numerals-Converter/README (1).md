@@ -15,7 +15,7 @@
 - Click `Create`.
 
 ### Step 2 : Create Forum Table
-
+Product
 - Click `Create Table`.
 
 - Set table name as `Forum`.
