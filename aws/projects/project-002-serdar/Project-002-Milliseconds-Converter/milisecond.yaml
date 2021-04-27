@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  Cloudformation Template for Milliseconds Converter Application.This template creates Python Flask web application
+Parameters:
+  
+Resources:
+  
+Outputs:
