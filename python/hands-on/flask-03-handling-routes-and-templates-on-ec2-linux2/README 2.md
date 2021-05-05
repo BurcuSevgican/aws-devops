@@ -110,7 +110,7 @@ The server responds to that request with an HTTP response message. Within the re
 
 - Write a template html file named `greet.html` which takes `name` as parameter under `templates` folder 
 
-- Write a template html file named `list10.html` which shows a list counting from 1 to 10 under `templates` folder 
+- Write a template html file named `list100.html` which shows a list counting from 1 to 10 under `templates` folder 
 
 - Write a template html file named `evens.html` which shows a list of even numbers from 1 to 10 under `templates` folder 
 
@@ -118,7 +118,7 @@ The server responds to that request with an HTTP response message. Within the re
 
 - Add and commit all changes on local repo
 
-- Push `app.py`, `greet.html`, `list10.html`, `evens.html`, and `mytext.txt` to remote repo `clarusway-python-workshop` on GitHub.
+- Push `app.py`, `greet.html`, `list100.html`, `evens.html`, and `mytext.txt` to remote repo `clarusway-python-workshop` on GitHub.
 
 ## Part 4 - Run the Hello World App on EC2 Instance
 

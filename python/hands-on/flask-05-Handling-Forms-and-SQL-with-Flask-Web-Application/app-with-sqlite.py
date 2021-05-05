@@ -6,25 +6,29 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 # Configure sqlite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./email.db' # 'SQLALCHEMY_DATABASE_URI' da olusturulan ne varsa sqlite:///./email.db ya ekle
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./email.db' # 'SQLALCHEMY_DATABASE_URI' da olusturulan ne varsa sqlite:///./email.db ya ekle,otomatik olarak db olusturacak 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # db deki modifikasyonlari takip edip uyari veriyor
 db = SQLAlchemy(app)  # bu app icinde olan herseyi db olarak tanimla 
 
 # Execute the code below only once.
 # Write sql code for initializing users table..
-drop_table = 'DROP TABLE IF EXISTS users;'
+#eger drop table varsa drop_table a esitle
+drop_table = """
+DROP TABLE IF EXISTS users;
+"""
 users_table = """ 
 CREATE TABLE users(
 username VARCHAR NOT NULL PRIMARY KEY,
 email VARCHAR);
 """
 data= """
-INSERT INTO users
+INSERT INTO users           
 VALUES
     ("Nurul Zudin", "nurulzudin@amazon.com"),
     ("Emrah", "emrah@google.com"),
     ("Mehmet", "mehmet@tesla.com");
 """
+# insert into data base icerisine veri atarken kullaniyoruz
 # sqlite de cevrime sokma,commit etme  
 db.session.execute(drop_table)
 db.session.execute(users_table)
@@ -38,7 +42,7 @@ def find_email(keyword):      # icerisinde keyword kelimesi bulunan username i g
     query = f"""
     SELECT * FROM users WHERE username like '%{keyword}%';  
     """
-    result = db.session.execute(query)
+    result = db.session.execute(query)  # icerisinde row bulunduran liste halinde gelecek result
     user_emails = [(row[0], row[1]) for row in result]
     if not any(user_emails):
         user_emails = [("Not Found", "Not Found")]
@@ -48,10 +52,10 @@ def find_email(keyword):      # icerisinde keyword kelimesi bulunan username i g
 # Write a function named `insert_email` which adds new email to users table the db.
 def insert_email(name,email):
     query = f"""
-    SELECT * FROM users WHERE username like '{name}'
+    SELECT * FROM users WHERE username like '{name}';
     """
     result = db.session.execute(query)
-    response = ''
+    # response = ''
     if name == None or email == None:
         response = 'Username or email can not be empty!!'
     elif not any(result):

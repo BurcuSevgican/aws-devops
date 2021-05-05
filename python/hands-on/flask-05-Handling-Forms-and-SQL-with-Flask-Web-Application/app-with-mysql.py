@@ -6,11 +6,11 @@ from flaskext.mysql import MySQL
 app = Flask(__name__)
 
 # Configure mysql database
-app.config['MYSQL_DATABASE_HOST'] = 'PLEASE WRITE HERE YOUR RDS ENDPOINT'
+app.config['MYSQL_DATABASE_HOST'] = 'ddatabase-sql.com0qe6yrlod.us-east-1.rds.amazonaws.com'
 app.config['MYSQL_DATABASE_USER'] = 'admin'      # RDS i baslatirken user ve pw ayni olmali
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Clarusway_1'
+app.config['MYSQL_DATABASE_PASSWORD'] = '123456789'
 app.config['MYSQL_DATABASE_DB'] = 'clarusway'
-app.config['MYSQL_DATABASE_PORT'] =  
+app.config['MYSQL_DATABASE_PORT'] =  3306
 mysql = MySQL()  # object creation
 mysql.init_app(app)
 connection = mysql.connect()
@@ -28,6 +28,9 @@ CREATE TABLE users (
   PRIMARY KEY (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 """
+# Bu kullanim aslinda sqlite ile ayni seyi ifade etmekle birlikte bazi mysql convention'dan 
+# dolayi kucuk farkliliklar olusturmaktadir.Bunlardan biri varchar olarak 50 dememiz gerekiyor burada.
+# Ayrica en sonda ENGINE tipi belirtmemiz gerekmektedir.
 data = """
 INSERT INTO clarusway.users 
 VALUES 
@@ -46,7 +49,7 @@ def find_emails(keyword):
     SELECT * FROM users WHERE username like '%{keyword}%';
     """
     cursor.execute(query)
-    result = cursor.fetchall()
+    result = cursor.fetchall() # cikan sonucu resulta iki satirla atabiliyoruz.
     user_emails = [(row[0], row[1]) for row in result]
     # if there is no user with given name in the db, then give warning
     if not any(user_emails):
