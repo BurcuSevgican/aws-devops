@@ -1,7 +1,27 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: |
   This Cloudformation Template was written for running Kittens Carousel Static Website on EC2. This website will be deployed on Linux 2 (ami-0742b4e673072066f) EC2 instance with custom security group which allows http connections on port 80 and ssh port 22 from anywhere. Kittens Carousel Static website is dowloaded from Public Github repository, then deployed on Apache Web Server.
-    
+Parameters:
+  InstanceType:
+    Description: Webserver EC2 instance type. Please select an instance
+    Type : String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.medium
+      - m1.large
+      - m1.xlarge
+      - m2.xlarge
+      - m2.2xlarge
+      - m2.4xlarge
+      - m3.xlarge
+      - m3.2xlarge
+      - c1.medium
+      - c1.xlarge
+      - cc1.4xlarge
+      - cc2.8xlarge
+      - cg1.4xlarge   
 Resources:
   WebServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -19,9 +39,9 @@ Resources:
   WebServerHost:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0742b4e673072066f
-      InstanceType: t2.micro
-      KeyName: serdar
+      ImageId: ami-0d5eff06f840b45e9
+      InstanceType: !Ref InstanceType
+      KeyName: Firstkey
       SecurityGroupIds:
         - !Ref WebServerSecurityGroup
       Tags:
@@ -33,13 +53,11 @@ Resources:
             #! /bin/bash
             yum update -y
             yum install httpd -y
-            FOLDER="https://raw.githubusercontent.com/serdarcw/kittens-carousel-static-website/master/static-web"
-            cd /var/www/html
-            wget $FOLDER/index.html
-            wget $FOLDER/cat0.jpg
-            wget $FOLDER/cat1.jpg
-            wget $FOLDER/cat2.jpg
-            wget $FOLDER/cat3.png
+            cd /var/www/html/
+            wget https://raw.githubusercontent.com/BurcuSevgican/aws-devops/main/aws/projects/101-kittens-carousel-static-website-ec2/static-web/index.html
+            wget https://raw.githubusercontent.com/BurcuSevgican/aws-devops/main/aws/projects/101-kittens-carousel-static-website-ec2/static-web/cat0.jpg
+            wget https://raw.githubusercontent.com/BurcuSevgican/aws-devops/main/aws/projects/101-kittens-carousel-static-website-ec2/static-web/cat2.jpg
+            wget https://raw.githubusercontent.com/BurcuSevgican/aws-devops/main/aws/projects/101-kittens-carousel-static-website-ec2/static-web/cat1.jpg
             systemctl start httpd
             systemctl enable httpd
 
