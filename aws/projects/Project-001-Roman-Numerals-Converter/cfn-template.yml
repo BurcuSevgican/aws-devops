@@ -9,7 +9,7 @@ Parameters:
   InstanceType:
     Description: Please select the type of EC2 instance
     Type: String
-    Default: m1.small
+    Default: t2.micro
     AllowedValues:
       - t2.micro
       - m1.small
@@ -65,6 +65,7 @@ Resources:
         cd templates
         wget https://raw.githubusercontent.com/BurcuSevgican/aws-devops/main/aws/projects/Project-001-Roman-Numerals-Converter/templates/index.html
         wget https://raw.githubusercontent.com/BurcuSevgican/aws-devops/main/aws/projects/Project-001-Roman-Numerals-Converter/templates/result.html
+        cd ..
         python3 app.py
 Outputs:
   WebsiteURL:
